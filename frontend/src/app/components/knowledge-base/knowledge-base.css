@@ -38,10 +38,17 @@
 }
 
 .kb-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  justify-content: center;
   gap: 40px;
-  align-items: start;
+  align-items: stretch;
+  width: 100%;
+}
+
+.kb-left, .kb-right {
+  flex: 1;
+  max-width: 600px;
+  width: 100%;
 }
 
 @media (max-width: 900px) {

@@ -54,7 +54,8 @@
       </div>
       <div class="telemetry-line">
         <span class="tl-label">CHUNKS</span>
-        <span class="tl-value tl-blue">{{ totalChunks }}</span>
+        <span class="tl-value tl-blue" *ngIf="totalChunks > 0">{{ totalChunks }}</span>
+        <span class="tl-value tl-blue" *ngIf="totalChunks === 0">[ VECTORIZING... ]</span>
       </div>
       <div class="telemetry-line">
         <span class="tl-label">COLLECTION</span>

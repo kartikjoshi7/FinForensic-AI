@@ -175,6 +175,8 @@ export class BoardroomComponent implements OnInit {
   /** Top-level error shown when a network/server failure occurs */
   parseError = '';
 
+  hasRunSwarm = false;
+
   /** True while ANY agent call is still in-flight (used to gate the button) */
   get isLoading(): boolean {
     return this.isLoadingQuant || this.isLoadingCompliance || this.isLoadingMacro
@@ -186,6 +188,15 @@ export class BoardroomComponent implements OnInit {
   get projectedExpected(): number {
     const { expected } = this.simulateGrowth();
     return expected[expected.length - 1] ?? 0;
+  }
+
+  get projectedWorst(): number {
+    const { worst } = this.simulateGrowth();
+    return worst[worst.length - 1] ?? 0;
+  }
+
+  get riskAdjustedDelta(): number {
+    return this.projectedExpected - (this.monthlySip * this.timeHorizonYears * 12);
   }
 
   /** Human-readable strategy label for the KPI strip */
@@ -496,6 +507,7 @@ export class BoardroomComponent implements OnInit {
       macro: 'loading',
       chairman: 'idle'
     };
+    this.hasRunSwarm = true;
     this.systemStatus = 'Initializing Map-Reduce Swarm...';
     
     // Sync old flags just in case they are used elsewhere

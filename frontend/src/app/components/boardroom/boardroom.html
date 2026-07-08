@@ -126,26 +126,31 @@
   <!-- ═════════════════════════════════════════════════ MAIN CONTENT -->
   <main class="board-content" id="pdf-export-zone">
 
-    <!-- KPI Strip -->
-    <div class="kpi-strip">
-      <div class="kpi-card">
-        <span>Monthly SIP</span>
-        <strong class="metric-value">₹{{ monthlySip | number }}</strong>
-      </div>
-      <div class="kpi-card">
-        <span>Projected Value</span>
-        <strong class="metric-value">₹{{ displayProjectedExpected | number:'1.0-0' }}</strong>
-      </div>
-      <div class="kpi-card"
-        [style.border-left-color]="macroShock !== 'none' ? '#ee5396' : '#0f62fe'">
-        <span>Active Shock</span>
-        <strong class="metric-value" [style.color]="macroShock !== 'none' ? '#ee5396' : '#24a148'">
-          {{ macroShock === 'none' ? 'None' : shockLabel }}
-        </strong>
-      </div>
-      <div class="kpi-card">
-        <span>Portfolio Strategy</span>
-        <strong class="metric-value">{{ strategyLabel }}</strong>
+    <!-- HUD Strip -->
+    <div class="hud-strip">
+      <ng-container *ngIf="hasRunSwarm">
+        <div class="hud-item">
+          <span class="hud-label">TOTAL CAPITAL INVESTED</span>
+          <strong class="hud-value">₹{{ (monthlySip * timeHorizonYears * 12) | number:'1.0-0' }}</strong>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">EXPECTED PROJECTED WEALTH</span>
+          <strong class="hud-value">₹{{ displayProjectedExpected | number:'1.0-0' }}</strong>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">WORST CASE SCENARIO</span>
+          <strong class="hud-value">₹{{ projectedWorst | number:'1.0-0' }}</strong>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">RISK-ADJUSTED DELTA</span>
+          <strong class="hud-value" [class.positive]="riskAdjustedDelta > 0" [class.negative]="riskAdjustedDelta < 0">
+            {{ riskAdjustedDelta > 0 ? '+' : '' }}₹{{ riskAdjustedDelta | number:'1.0-0' }}
+          </strong>
+        </div>
+      </ng-container>
+      
+      <div class="hud-empty" *ngIf="!hasRunSwarm">
+        <span class="empty-pulse">[ SYSTEM STANDBY - AWAITING PARAMETERS ]</span>
       </div>
     </div>
 
@@ -183,12 +188,13 @@
       <!-- Execute button -->
       <button class="execute-btn"
         [disabled]="isLoading"
+        [class.loading]="isLoading"
         (click)="analyzeData()">
         <ng-container *ngIf="!isLoading">
           ▶ &nbsp; EXECUTE NEURAL SWARM
         </ng-container>
         <ng-container *ngIf="isLoading">
-          ⟳ &nbsp; Agents deliberating&hellip;
+          [ |||||||| ] EXECUTING NEURAL ORCHESTRATION...
         </ng-container>
       </button>
 
