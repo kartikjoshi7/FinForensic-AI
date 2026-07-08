@@ -1,0 +1,327 @@
+<div class="boardroom-layout">
+
+  <!-- ══════════════════════════════════════════════════════════ CONTROL PANEL SIDEBAR -->
+  <aside class="control-panel">
+    <div class="controls-container">
+      <div class="panel-brand">
+        <h2 class="glow-title">FINFORENSIC AI BOARDROOM</h2>
+        <h4>Monte Carlo Risk Engine</h4>
+      </div>
+
+    <!-- Monthly SIP -->
+    <div class="ctrl-group">
+      <label for="monthlySip">
+        Monthly SIP &nbsp;
+        <span class="ctrl-value">₹{{ monthlySip | number }}</span>
+      </label>
+      <div class="inline-control-row">
+        <input type="range" id="monthlySip"
+          min="500" max="100000" step="500"
+          [(ngModel)]="monthlySip" (ngModelChange)="runSimulation()"/>
+        <input type="number"
+          min="500" max="100000" step="500"
+          [(ngModel)]="monthlySip" (ngModelChange)="runSimulation()"/>
+      </div>
+    </div>
+
+    <!-- Expected Return -->
+    <div class="ctrl-group">
+      <label for="expectedReturn">
+        Expected Return (CAGR) &nbsp;
+        <span class="ctrl-value">{{ expectedReturn }}%</span>
+      </label>
+      <div class="inline-control-row">
+        <input type="range" id="expectedReturn"
+          min="1" max="30" step="0.5"
+          [(ngModel)]="expectedReturn" (ngModelChange)="runSimulation()"/>
+        <input type="number"
+          min="1" max="30" step="0.5"
+          [(ngModel)]="expectedReturn" (ngModelChange)="runSimulation()"/>
+      </div>
+    </div>
+
+    <!-- Time Horizon -->
+    <div class="ctrl-group">
+      <label for="timeHorizon">
+        Time Horizon &nbsp;
+        <span class="ctrl-value">{{ timeHorizonYears }} yrs</span>
+      </label>
+      <div class="inline-control-row">
+        <input type="range" id="timeHorizon"
+          min="1" max="40" step="1"
+          [(ngModel)]="timeHorizonYears" (ngModelChange)="runSimulation()"/>
+        <input type="number"
+          min="1" max="40" step="1"
+          [(ngModel)]="timeHorizonYears" (ngModelChange)="runSimulation()"/>
+      </div>
+    </div>
+
+    <!-- Volatility -->
+    <div class="ctrl-group">
+      <label for="volatility">
+        Volatility Band &nbsp;
+        <span class="ctrl-value">±{{ volatility }}%</span>
+      </label>
+      <div class="inline-control-row">
+        <input type="range" id="volatility"
+          min="1" max="40" step="1"
+          [(ngModel)]="volatility" (ngModelChange)="runSimulation()"/>
+        <input type="number"
+          min="1" max="40" step="1"
+          [(ngModel)]="volatility" (ngModelChange)="runSimulation()"/>
+      </div>
+    </div>
+
+    <!-- Portfolio Strategy -->
+    <div class="ctrl-group dropdown-group">
+      <label for="portfolioStrategy">Portfolio Strategy</label>
+      <select id="portfolioStrategy"
+        [(ngModel)]="portfolioStrategy" (ngModelChange)="runSimulation()">
+        <option value="liquid_fund">Liquid Fund</option>
+        <option value="debt_fund">Debt Fund</option>
+        <option value="multi_asset">Multi-Asset</option>
+        <option value="large_cap">Large Cap</option>
+        <option value="index_fund">Index Fund</option>
+        <option value="flexi_cap">Flexi Cap</option>
+        <option value="mid_cap">Mid Cap</option>
+        <option value="small_cap">Small Cap</option>
+      </select>
+    </div>
+
+    <!-- Macro-Economic Shock -->
+    <div class="ctrl-group dropdown-group">
+      <label for="macroShock">Macro-Economic Shock</label>
+      <select id="macroShock"
+        [(ngModel)]="macroShock" (ngModelChange)="runSimulation()">
+        <option value="none">None</option>
+        <option value="oil_shock_1973">1973 Oil Shock</option>
+        <option value="black_monday_1987">1987 Black Monday</option>
+        <option value="dot_com_2000">2000 Dot-Com Bubble</option>
+        <option value="crisis_2008">2008 Financial Crisis</option>
+        <option value="flash_crash_2010">2010 Flash Crash</option>
+        <option value="taper_tantrum_2013">2013 Taper Tantrum</option>
+        <option value="pandemic_2020">2020 Pandemic Lockdown</option>
+      </select>
+    </div>
+
+    <!-- Bottom Telemetry -->
+    <div class="ctrl-telemetry">
+      <div class="telem-row">
+        <span class="telem-label">Capital Invested</span>
+        <span class="telem-value">₹{{ (monthlySip * timeHorizonYears * 12) | number:'1.0-0' }}</span>
+      </div>
+      <div class="telem-row telem-best">
+        <span class="telem-label">Best Case CAGR</span>
+        <span class="telem-value">{{ expectedReturn + volatility }}%</span>
+      </div>
+      <div class="telem-row telem-worst">
+        <span class="telem-label">Worst Case CAGR</span>
+        <span class="telem-value">{{ expectedReturn - volatility }}%</span>
+      </div>
+    </div>
+    
+    </div> <!-- /controls-container -->
+  </aside>
+
+  <!-- ═════════════════════════════════════════════════ MAIN CONTENT -->
+  <main class="board-content" id="pdf-export-zone">
+
+    <!-- KPI Strip -->
+    <div class="kpi-strip">
+      <div class="kpi-card">
+        <span>Monthly SIP</span>
+        <strong class="metric-value">₹{{ monthlySip | number }}</strong>
+      </div>
+      <div class="kpi-card">
+        <span>Projected Value</span>
+        <strong class="metric-value">₹{{ displayProjectedExpected | number:'1.0-0' }}</strong>
+      </div>
+      <div class="kpi-card"
+        [style.border-left-color]="macroShock !== 'none' ? '#ee5396' : '#0f62fe'">
+        <span>Active Shock</span>
+        <strong class="metric-value" [style.color]="macroShock !== 'none' ? '#ee5396' : '#24a148'">
+          {{ macroShock === 'none' ? 'None' : shockLabel }}
+        </strong>
+      </div>
+      <div class="kpi-card">
+        <span>Portfolio Strategy</span>
+        <strong class="metric-value">{{ strategyLabel }}</strong>
+      </div>
+    </div>
+
+    <!-- Chart Panel -->
+    <div class="chart-panel">
+      <div class="chart-header">
+        <div class="chart-header-left">
+          <h3>Monte Carlo SIP Trajectories</h3>
+          <span class="chart-meta">
+            {{ timeHorizonYears }}-yr &middot; {{ timeHorizonYears * 12 }} data points
+          </span>
+        </div>
+        <button class="btn-export" (click)="exportToPDF()" [disabled]="isExportingPDF">
+          {{ isExportingPDF ? '[ GENERATING... ]' : '[ EXPORT DOSSIER ]' }}
+        </button>
+      </div>
+      <div class="chart-container">
+        <canvas baseChart
+          [data]="chartData"
+          [options]="chartOptions"
+          [plugins]="chartPlugins"
+          [type]="chartType">
+        </canvas>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════ AI PANEL -->
+    <div class="ai-panel">
+
+      <h3 class="ai-panel-title">
+        <span class="title-icon">◆</span>
+        Neural Swarm Consensus — Multi-Agent Risk Debate
+      </h3>
+
+      <!-- Execute button -->
+      <button class="execute-btn"
+        [disabled]="isLoading"
+        (click)="analyzeData()">
+        <ng-container *ngIf="!isLoading">
+          ▶ &nbsp; EXECUTE NEURAL SWARM
+        </ng-container>
+        <ng-container *ngIf="isLoading">
+          ⟳ &nbsp; Agents deliberating&hellip;
+        </ng-container>
+      </button>
+
+      <!-- Empty state -->
+      <p *ngIf="!isLoading && !quantReport && !complianceReport && !macroReport && !parseError"
+         class="empty-state">
+        Configure simulation parameters and execute the neural swarm to receive agent perspectives.
+      </p>
+
+      <!-- Error state -->
+      <pre *ngIf="parseError" class="error-block">{{ parseError }}</pre>
+
+      <!-- ── SSE Live Transcript ──────────────────────────────────────── -->
+      <details open class="stream-details" *ngIf="debateTranscript.length > 0">
+        <summary class="stream-summary">>_ VIEW RAW NEURAL STREAM LOGS</summary>
+        <div class="sse-transcript">
+          <div class="transcript-chrome">
+            <span class="tc-dot red"></span>
+            <span class="tc-dot yellow"></span>
+            <span class="tc-dot green"></span>
+            <span class="tc-title">LIVE_NEURAL_STREAM</span>
+          </div>
+          <div class="transcript-body">
+            <div *ngFor="let msg of debateTranscript"
+              class="transcript-line {{ msg.cssClass }}">
+              <strong>[{{ msg.role }}]</strong> {{ msg.text }}
+            </div>
+            <div *ngIf="streamStatus.chairman === 'loading'" class="transcript-line">
+              <em>> Chairman is synthesizing arguments&hellip;</em>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ── Agent Cards ──────────────────────────────────────────────── -->
+      <div class="agent-grid"
+        *ngIf="streamStatus.quant !== 'idle' || streamStatus.compliance !== 'idle' || streamStatus.macro !== 'idle'">
+
+        <div class="agent-card quant-card" [class.agent-loading]="streamStatus.quant === 'loading'">
+          <div class="agent-header">
+            <h4 class="agent-title quant-title">Aggressive Quant</h4>
+            <span class="token-badge" *ngIf="quantTokens">COST: {{ quantTokens }} TOKENS</span>
+          </div>
+          <div class="agent-divider"></div>
+          <p *ngIf="streamStatus.quant === 'loading'" class="agent-pulse">
+            > Executing Neural Query...
+          </p>
+          <div *ngIf="streamStatus.quant === 'complete' && quantReport" class="agent-body">
+            <div class="executive-card" *ngIf="parseReportPartA(quantReport)">
+              <span class="micro-badge">[EXECUTIVE SUMMARY]</span>
+              <div>{{ parseReportPartA(quantReport) }}</div>
+            </div>
+            <div class="detailed-analysis" *ngIf="parseReportPartB(quantReport)">
+              <span class="micro-badge">[DETAILED ANALYSIS]</span>
+              <div>{{ parseReportPartB(quantReport) }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="agent-card compliance-card" [class.agent-loading]="streamStatus.compliance === 'loading'">
+          <div class="agent-header">
+            <h4 class="agent-title compliance-title">Compliance Officer</h4>
+            <span class="token-badge" *ngIf="complianceTokens">COST: {{ complianceTokens }} TOKENS</span>
+          </div>
+          <div class="agent-divider"></div>
+          <p *ngIf="streamStatus.compliance === 'loading'" class="agent-pulse">
+            > Executing Neural Query...
+          </p>
+          <div *ngIf="streamStatus.compliance === 'complete' && complianceReport" class="agent-body">
+            <div class="executive-card" *ngIf="parseReportPartA(complianceReport)">
+              <span class="micro-badge">[EXECUTIVE SUMMARY]</span>
+              <div>{{ parseReportPartA(complianceReport) }}</div>
+            </div>
+            <div class="detailed-analysis" *ngIf="parseReportPartB(complianceReport)">
+              <span class="micro-badge">[DETAILED ANALYSIS]</span>
+              <div>{{ parseReportPartB(complianceReport) }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="agent-card macro-card" [class.agent-loading]="streamStatus.macro === 'loading'">
+          <div class="agent-header">
+            <h4 class="agent-title macro-title">Macro-Economist</h4>
+            <span class="token-badge" *ngIf="macroTokens">COST: {{ macroTokens }} TOKENS</span>
+          </div>
+          <div class="agent-divider"></div>
+          <p *ngIf="streamStatus.macro === 'loading'" class="agent-pulse">
+            > Executing Neural Query...
+          </p>
+          <div *ngIf="streamStatus.macro === 'complete' && macroReport" class="agent-body">
+            <div class="executive-card" *ngIf="parseReportPartA(macroReport)">
+              <span class="micro-badge">[EXECUTIVE SUMMARY]</span>
+              <div>{{ parseReportPartA(macroReport) }}</div>
+            </div>
+            <div class="detailed-analysis" *ngIf="parseReportPartB(macroReport)">
+              <span class="micro-badge">[DETAILED ANALYSIS]</span>
+              <div>{{ parseReportPartB(macroReport) }}</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── Final Verdict ────────────────────────────────────────────── -->
+      <div class="verdict-banner" *ngIf="finalVerdict" [ngClass]="verdictStatusClass">
+        <div class="verdict-content">
+          <h3>FINAL BOARDROOM VERDICT</h3>
+          <div class="verdict-body">{{ finalVerdict }}</div>
+        </div>
+        <div class="verdict-actions">
+          <button class="btn-cat" (click)="toggleAuditTrail()">
+            {{ showAuditTrail ? '[ HIDE COGNITIVE AUDIT TRAIL ]' : '[ VIEW COGNITIVE AUDIT TRAIL ]' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- ── Cognitive Audit Trail ─────────────────────────────────────── -->
+      <details class="stream-details" *ngIf="showAuditTrail && finalVerdict">
+        <summary class="stream-summary">[+] EXPAND COGNITIVE AUDIT TRAIL</summary>
+        <div class="cat-container">
+          <div class="cat-header">COGNITIVE AUDIT TRAIL — Decision Lineage</div>
+          <div class="cat-timeline">
+            <div class="cat-node" *ngFor="let msg of debateTranscript">
+              <div class="cat-node-text">
+                <strong>[{{ msg.role }}]</strong> {{ msg.text }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+    </div>
+
+  </main>
+
+</div>

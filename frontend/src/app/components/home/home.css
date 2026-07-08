@@ -1,0 +1,307 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   FINFORENSIC AI — Home / Landing Page
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes subtlePulse {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 1;   }
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%;   }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%;   }
+}
+
+@keyframes glowPulse {
+  0%, 100% { text-shadow: 0 0 30px rgba(15, 98, 254, 0.3), 0 0 60px rgba(15, 98, 254, 0.1); }
+  50%      { text-shadow: 0 0 40px rgba(15, 98, 254, 0.5), 0 0 80px rgba(15, 98, 254, 0.2); }
+}
+
+@keyframes ambientBreathe {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.03); }
+}
+
+.anim-fade-in {
+  opacity: 0;
+  animation: fadeInUp 0.7s ease-out forwards;
+}
+
+/* ── Page Container ──────────────────────────────────────────────────────── */
+.home-page {
+  position: relative;
+  min-height: 100vh;
+  background-color: #050505;
+  padding: 60px 48px 80px;
+  overflow: hidden;
+}
+
+/* ── Ambient Background ──────────────────────────────────────────────────── */
+.ambient-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 10%, rgba(15, 98, 254, 0.25), transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(238, 83, 150, 0.08), transparent 40%);
+  z-index: 0;
+  animation: ambientBreathe 8s ease-in-out infinite;
+}
+
+.home-page > *:not(.ambient-glow) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ═══════════════════════════════════════════════════ HERO ═══════════════ */
+.hero {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 64px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border: 1px solid rgba(15, 98, 254, 0.25);
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.65rem;
+  color: #0f62fe;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  background: rgba(15, 98, 254, 0.04);
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #24a148;
+  animation: subtlePulse 2s ease-in-out infinite;
+  box-shadow: 0 0 6px rgba(36, 161, 72, 0.5);
+}
+
+.hero-title {
+  font-family: 'Inter', 'Roboto', Helvetica, Arial, sans-serif;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: 8px;
+  line-height: 1.05;
+  margin: 0 0 20px;
+  background: linear-gradient(135deg, #0f62fe 0%, #33b1ff 50%, #08bdba 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeInUp 0.7s ease-out forwards, gradientShift 8s ease infinite, glowPulse 4s ease-in-out infinite;
+  opacity: 0;
+}
+
+.hero-subtitle {
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 1.1rem;
+  color: var(--text-secondary, #9ca3af);
+  letter-spacing: 1px;
+  margin: 0 0 24px;
+}
+
+.hero-description {
+  font-family: 'Inter', 'Roboto', sans-serif;
+  font-size: 1.05rem;
+  color: #d1d5db;
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 0 auto 40px;
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 42px;
+  background: #0f62fe;
+  color: #ffffff;
+  border: 1px solid #0f62fe;
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(15, 98, 254, 0.4);
+}
+
+.cta-button:hover {
+  background: #0043ce;
+  border-color: #33b1ff;
+  box-shadow:
+    0 0 30px rgba(15, 98, 254, 0.6),
+    0 0 60px rgba(15, 98, 254, 0.3);
+  transform: translateY(-3px) scale(1.02);
+}
+
+.cta-arrow {
+  transition: transform 0.3s ease;
+}
+
+.cta-button:hover .cta-arrow {
+  transform: translateX(4px);
+}
+
+/* ═══════════════════════════════════════════════ FEATURE CARDS ══════════ */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto 64px;
+}
+
+@media (max-width: 900px) {
+  .features-grid { grid-template-columns: 1fr; }
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 28px 24px;
+  transition: all 0.35s ease;
+  position: relative;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.feature-card.theme-pink:hover {
+  border-color: rgba(238, 83, 150, 0.6);
+  box-shadow: 0 0 30px rgba(238, 83, 150, 0.15);
+}
+
+.feature-card.theme-blue:hover {
+  border-color: rgba(15, 98, 254, 0.6);
+  box-shadow: 0 0 30px rgba(15, 98, 254, 0.15);
+}
+
+.feature-card.theme-green:hover {
+  border-color: rgba(36, 161, 72, 0.6);
+  box-shadow: 0 0 30px rgba(36, 161, 72, 0.15);
+}
+
+.card-badge {
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.65rem;
+  color: #393939;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+
+.card-title {
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 12px;
+  letter-spacing: 0.5px;
+}
+
+.card-title-pink  { color: #ee5396; }
+.card-title-blue  { color: #0f62fe; }
+.card-title-green { color: #24a148; }
+
+.card-body {
+  font-family: 'Inter', 'Roboto', sans-serif;
+  font-size: 1rem;
+  color: var(--text-secondary, #9ca3af);
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+
+.mono-accent {
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  color: var(--text-accent, #60a5fa);
+  font-size: 0.9rem;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 3px 10px;
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted, #6b7280);
+  border: 1px solid var(--border-light, #374151);
+  letter-spacing: 0.5px;
+}
+
+/* ═══════════════════════════════════════════════ METRICS STRIP ══════════ */
+.laser-divider {
+  height: 1px;
+  max-width: 800px;
+  margin: 0 auto 40px;
+  background: linear-gradient(90deg, transparent, rgba(15, 98, 254, 0.6), transparent);
+  box-shadow: 0 0 10px rgba(15, 98, 254, 0.6);
+}
+
+.metrics-strip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 28px 0;
+  border-top: 1px solid #1a1a1a;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+@media (max-width: 600px) {
+  .metrics-strip { flex-direction: column; gap: 20px; }
+  .metric-divider { display: none; }
+}
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.metric-value {
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #f4f4f4;
+}
+
+.metric-label {
+  font-family: 'Inter', 'Roboto', sans-serif;
+  font-size: 0.68rem;
+  color: #393939;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.metric-divider {
+  width: 1px;
+  height: 36px;
+  background: #1a1a1a;
+}

@@ -1,0 +1,33 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   FINFORENSIC AI — Global Design Tokens & Typography Baseline
+   WCAG 2.1 AA Compliant Contrast Ratios
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --text-primary:   #f3f4f6;
+  --text-secondary: #d1d5db;
+  --text-accent:    #60a5fa;
+  --text-muted:     #6b7280;
+  --border-light:   #374151;
+  --bg-deep:        #050505;
+  --bg-panel:       #0a0a0a;
+  --bg-elevated:    #111827;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: 'Inter', 'Roboto', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

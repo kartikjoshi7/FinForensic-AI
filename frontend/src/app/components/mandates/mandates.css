@@ -1,0 +1,396 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   FINFORENSIC AI — Mandates Component
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes cursorBlink {
+  0%, 100% { border-right-color: #0f62fe; }
+  50%      { border-right-color: transparent; }
+}
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1;   }
+}
+
+.anim-fade-in {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.mandates-page {
+  position: relative;
+  min-height: 100vh;
+  background: #050505;
+  padding: 48px;
+  overflow: hidden;
+}
+
+.mandates-ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 60% 10%, rgba(238, 83, 150, 0.06), transparent 40%);
+}
+
+.mandates-page > *:not(.mandates-ambient) {
+  position: relative;
+  z-index: 1;
+}
+
+.mandates-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.mandates-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .mandates-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.glow-title {
+  font-family: 'Inter', 'Roboto', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 5px;
+  margin: 0 0 8px;
+  background: linear-gradient(135deg, #0f62fe 0%, #33b1ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(15, 98, 254, 0.4);
+}
+
+.mandates-sub {
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.75rem;
+  color: #393939;
+  letter-spacing: 0.5px;
+  margin: 0 0 32px;
+}
+
+/* ── CLI Terminal ────────────────────────────────────────────────────────── */
+.cli-terminal {
+  background: #0a0a0a;
+  border: 1px solid #1a1a1a;
+  overflow: hidden;
+}
+
+.cli-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: #121212;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.cli-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.cli-dot.red    { background: #da1e28; }
+.cli-dot.yellow { background: #f1c21b; }
+.cli-dot.green  { background: #24a148; }
+
+.cli-title {
+  margin-left: 8px;
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.65rem;
+  color: #525252;
+  letter-spacing: 1px;
+}
+
+.cli-prompt {
+  padding: 16px 20px 0;
+}
+
+.cli-label {
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.72rem;
+  color: #ee5396;
+  letter-spacing: 0.5px;
+}
+
+.cli-input {
+  display: block;
+  width: calc(100% - 40px);
+  margin: 0 20px 12px;
+  padding: 16px;
+  min-height: 160px;
+  background: #050505;
+  border: 1px solid var(--border-light, #374151);
+  color: #4ade80;
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 15px;
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.cli-input:focus {
+  border-color: rgba(218, 30, 40, 0.6);
+  box-shadow: 0 0 25px rgba(218, 30, 40, 0.15);
+}
+
+.cli-input::placeholder {
+  color: #4b5563;
+}
+
+.cli-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  border-top: 1px solid #1a1a1a;
+  background: #0a0a0a;
+}
+
+.cli-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.65rem;
+  color: #24a148;
+  letter-spacing: 1px;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #24a148;
+  animation: statusPulse 2s ease-in-out infinite;
+  box-shadow: 0 0 6px rgba(36, 161, 72, 0.4);
+}
+
+.cli-chars {
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.62rem;
+  color: #393939;
+  letter-spacing: 0.5px;
+}
+
+/* ── Template Library & Status Bar ───────────────────────────────────────── */
+.template-library {
+  padding: 16px 20px 0;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-template {
+  background: transparent;
+  color: #a8a8a8;
+  border: 1px solid #333;
+  padding: 6px 12px;
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+
+.btn-template:hover {
+  color: #da1e28;
+  border-color: rgba(218, 30, 40, 0.5);
+  background: rgba(218, 30, 40, 0.08);
+  box-shadow: 0 0 15px rgba(218, 30, 40, 0.15);
+  transform: translateY(-1px);
+}
+
+.status-bar {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.7rem;
+  color: #f4f4f4;
+}
+
+.status-dot-green {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #24a148;
+  box-shadow: 0 0 8px rgba(36, 161, 72, 0.6);
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+.status-right {
+  display: flex;
+  gap: 8px;
+}
+
+.stat-card {
+  border: 1px solid #333;
+  padding: 4px 10px;
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.65rem;
+  color: #d1d5db;
+  background: #111;
+  border-radius: 4px;
+}
+
+/* ── Active Parameters ───────────────────────────────────────────────────── */
+.active-parameters {
+  padding: 0 20px 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.param-badge {
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.badge-blue {
+  color: #60a5fa;
+  background: rgba(15, 98, 254, 0.1);
+  border: 1px solid rgba(15, 98, 254, 0.3);
+}
+
+.badge-purple {
+  color: #d8b4fe;
+  background: rgba(138, 63, 252, 0.1);
+  border: 1px solid rgba(138, 63, 252, 0.3);
+}
+
+/* ── Info Block ──────────────────────────────────────────────────────────── */
+.info-block {
+  margin-top: 24px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-light, #374151);
+  font-family: 'Inter', 'Roboto', sans-serif;
+  font-size: 0.95rem;
+  color: var(--text-secondary, #9ca3af);
+  line-height: 1.7;
+}
+
+.info-block p {
+  margin: 0 0 8px;
+}
+
+.info-block p:last-child {
+  margin: 0;
+}
+
+.info-block strong {
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  color: #6f6f6f;
+  font-size: 0.75rem;
+}
+
+.accent-red {
+  color: #da1e28;
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-weight: 600;
+  font-size: 0.78rem;
+}
+
+.info-persist {
+  color: var(--text-muted, #6b7280);
+}
+
+/* ── Protocol Visualization ──────────────────────────────────────────────── */
+.pipeline-block {
+  background: rgba(10, 10, 10, 0.6);
+  border: 1px solid var(--border-light, #374151);
+  padding: 24px;
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.9rem;
+  height: 100%;
+}
+
+.telemetry-header {
+  color: #24a148;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.telemetry-header.accent-red {
+  color: #da1e28;
+}
+
+.pipeline-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  color: #a8a8a8;
+}
+
+.step-icon {
+  color: #0f62fe;
+  font-weight: 700;
+}
+
+.step-icon.accent-red {
+  color: #da1e28;
+}
+
+.pipeline-arrow {
+  margin-left: 12px;
+  color: #393939;
+  font-size: 1.2rem;
+}
+
+.pipeline-status {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px dashed #374151;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pipeline-status.idle {
+  color: #6f6f6f;
+}
+
+.pipeline-status.active-red {
+  color: #da1e28;
+  animation: subtlePulse 2s infinite;
+}
+
+.status-pulse-red {
+  width: 6px;
+  height: 6px;
+  background: #da1e28;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #da1e28;
+}

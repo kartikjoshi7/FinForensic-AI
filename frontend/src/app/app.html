@@ -1,0 +1,55 @@
+<div class="shell-layout">
+  <!-- ══════════════════════════════════════════════════════════ TOP NAVIGATION -->
+  <header class="top-nav">
+    <div class="shell-brand">
+      <h2>
+        <img src="logo.png" alt="FinForensic Logo" class="brand-logo" />
+        <span class="logo-accent">FINFORENSIC</span> AI
+      </h2>
+      <span class="desktop-only-badge">
+        <span class="footer-dot"></span> WATSONX ENGINE ONLINE
+      </span>
+    </div>
+
+    <!-- Desktop Nav -->
+    <nav class="desktop-nav">
+      <a routerLink="/home" routerLinkActive="active-link">Platform Overview</a>
+      <a routerLink="/knowledge-base" routerLinkActive="active-link">Knowledge Base</a>
+      <a routerLink="/mandates" routerLinkActive="active-link">Compliance Mandates</a>
+      <a routerLink="/boardroom" routerLinkActive="active-link">Live Boardroom</a>
+    </nav>
+
+    <!-- Mobile Hamburger Toggle -->
+    <button class="mobile-toggle" (click)="toggleSidebar()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Mobile Dropdown Menu -->
+  <nav class="mobile-nav" *ngIf="!isSidebarCollapsed">
+    <a routerLink="/home" routerLinkActive="active-link" (click)="toggleSidebar()">Platform Overview</a>
+    <a routerLink="/knowledge-base" routerLinkActive="active-link" (click)="toggleSidebar()">Knowledge Base</a>
+    <a routerLink="/mandates" routerLinkActive="active-link" (click)="toggleSidebar()">Compliance Mandates</a>
+    <a routerLink="/boardroom" routerLinkActive="active-link" (click)="toggleSidebar()">Live Boardroom</a>
+    <div class="mobile-footer">
+      <span class="footer-dot"></span> WATSONX ENGINE ONLINE
+    </div>
+  </nav>
+
+  <!-- ═════════════════════════════════════════════════ MAIN ROUTER CONTENT -->
+  <main class="shell-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- ═════════════════════════════════════════════════════════ GLOBAL FOOTER -->
+  <footer class="global-footer">
+    <div class="footer-content">
+      <span class="copyright">&copy; 2026 FinForensic AI. All Rights Reserved.</span>
+      <span class="powered-by">Powered by <strong>IBM Services</strong> | Made using <strong>IBM BoB</strong></span>
+    </div>
+  </footer>
+</div>

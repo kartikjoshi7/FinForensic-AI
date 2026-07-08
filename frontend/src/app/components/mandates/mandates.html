@@ -1,0 +1,103 @@
+<div class="mandates-page">
+  <div class="mandates-ambient"></div>
+
+  <section class="mandates-container">
+    <div class="mandates-header anim-fade-in" style="animation-delay: 0.1s;">
+      <h2 class="glow-title">COMPLIANCE MANDATES</h2>
+      <p class="mandates-sub">> Institutional Risk Override Terminal</p>
+    </div>
+
+    <div class="mandates-grid">
+      <!-- ── Left Pane: CLI Terminal ─────────────────────────────────────── -->
+      <div class="mandates-left">
+        <div class="cli-terminal anim-fade-in" style="animation-delay: 0.3s;">
+      <div class="cli-header">
+        <span class="cli-dot red"></span>
+        <span class="cli-dot yellow"></span>
+        <span class="cli-dot green"></span>
+        <span class="cli-title">MANDATE_INJECTION_v1.0</span>
+      </div>
+
+      <div class="cli-prompt">
+        <span class="cli-label">[ INJECT REGULATORY COMPLIANCE MANDATES ]</span>
+      </div>
+
+      <div class="template-library">
+        <button class="btn-template" (click)="appendTemplate('> Must adhere strictly to global ESG policies (Scope 1 and 2 emissions)')">[ ESG POLICY ]</button>
+        <button class="btn-template" (click)="appendTemplate('> Must be fully compliant with GDPR data processing constraints')">[ GDPR COMPLIANCE ]</button>
+        <button class="btn-template" (click)="appendTemplate('> Debt-to-equity ratio must not exceed 2.0x')">[ DEBT LIMIT: 2.0x ]</button>
+      </div>
+
+      <div class="status-bar">
+        <div class="status-left">
+          <span class="status-dot-green"></span>
+          <span>[ STATUS: SYSTEM SYNCHRONIZED ]</span>
+        </div>
+        <div class="status-right">
+          <div class="stat-card">Mandates: {{ mandateCount }}</div>
+          <div class="stat-card">Risk Profile: Strict</div>
+        </div>
+      </div>
+
+      <textarea [(ngModel)]="stateService.customMandates"
+        class="cli-input"
+        placeholder="> Must have zero pending environmental litigation&#10;> Debt-to-equity ratio must not exceed 2.0&#10;> No exposure to sanctioned jurisdictions"
+        spellcheck="false"
+      ></textarea>
+
+      <div class="active-parameters" *ngIf="activeBadges.length > 0">
+        <span *ngFor="let badge of activeBadges" class="param-badge {{ badge.class }}">[{{ badge.label }}]</span>
+      </div>
+
+      <div class="cli-footer">
+        <span class="cli-status">
+          <span class="status-dot"></span>
+          {{ stateService.customMandates.length > 0 ? 'MANDATES ACTIVE' : 'AWAITING INPUT' }}
+        </span>
+        <span class="cli-chars">{{ stateService.customMandates.length }} chars</span>
+      </div>
+    </div>
+
+    <!-- ── Info Block ──────────────────────────────────────────────────── -->
+    <div class="info-block anim-fade-in" style="animation-delay: 0.5s;">
+      <p><strong>[PROTOCOL]</strong> Mandates injected here act as non-negotiable <span class="accent-red">HARD VETO</span> rules in the Compliance Agent's neural query. If any mandate is violated, the Chairman Orchestrator is strictly forbidden from approving the investment.</p>
+        <p class="info-persist"><strong>[PERSIST]</strong> Mandates are stored in localStorage and survive page reloads.</p>
+      </div>
+      </div>
+      <!-- ── End Left Pane ── -->
+
+      <!-- ── Right Pane: Protocol Visualization ────────────────────────── -->
+      <div class="mandates-right">
+        <div class="pipeline-block anim-fade-in" style="animation-delay: 0.5s;">
+          <div class="telemetry-header accent-red">NEURAL_VETO_PROTOCOL</div>
+          
+          <div class="pipeline-step">
+            <span class="step-icon accent-red">[1]</span>
+            <span class="step-desc">Policy Ingestion & Sanitization</span>
+          </div>
+          <div class="pipeline-arrow">&darr;</div>
+          <div class="pipeline-step">
+            <span class="step-icon accent-red">[2]</span>
+            <span class="step-desc">Context Window Injection</span>
+          </div>
+          <div class="pipeline-arrow">&darr;</div>
+          <div class="pipeline-step">
+            <span class="step-icon accent-red">[3]</span>
+            <span class="step-desc">Cognitive Verification Engine</span>
+          </div>
+          <div class="pipeline-arrow">&darr;</div>
+          <div class="pipeline-step">
+            <span class="step-icon accent-red">[4]</span>
+            <span class="step-desc">Chairman Orchestrator (HARD VETO / PASS)</span>
+          </div>
+          
+          <div class="pipeline-status" [ngClass]="stateService.customMandates.length > 0 ? 'active-red' : 'idle'">
+            <span class="status-pulse-red" *ngIf="stateService.customMandates.length > 0"></span>
+            {{ stateService.customMandates.length > 0 ? 'MANDATE OVERRIDES ACTIVE' : 'NO VETO OVERRIDES DETECTED' }}
+          </div>
+        </div>
+      </div>
+      <!-- ── End Right Pane ── -->
+    </div>
+  </section>
+</div>

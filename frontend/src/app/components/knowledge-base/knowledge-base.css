@@ -1,0 +1,275 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   FINFORENSIC AI — Knowledge Base Component
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.anim-fade-in {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.kb-page {
+  position: relative;
+  min-height: 100vh;
+  background: #050505;
+  padding: 48px;
+  overflow: hidden;
+}
+
+.kb-ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 30% 20%, rgba(15, 98, 254, 0.08), transparent 40%);
+}
+
+.kb-page > *:not(.kb-ambient) {
+  position: relative;
+  z-index: 1;
+}
+
+.kb-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.kb-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .kb-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.glow-title {
+  font-family: 'Inter', 'Roboto', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 5px;
+  margin: 0 0 8px;
+  background: linear-gradient(135deg, #0f62fe 0%, #33b1ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(15, 98, 254, 0.4);
+}
+
+.kb-sub {
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.75rem;
+  color: #393939;
+  letter-spacing: 0.5px;
+  margin: 0 0 32px;
+}
+
+/* ── Upload Terminal ─────────────────────────────────────────────────────── */
+.upload-terminal {
+  background: #0a0a0a;
+  border: 1px solid #1a1a1a;
+  overflow: hidden;
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: #121212;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.terminal-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.terminal-dot.red    { background: #da1e28; }
+.terminal-dot.yellow { background: #f1c21b; }
+.terminal-dot.green  { background: #24a148; }
+
+.terminal-title {
+  margin-left: 8px;
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.65rem;
+  color: #525252;
+  letter-spacing: 1px;
+}
+
+.upload-dropzone {
+  border: 2px dashed var(--border-light, #374151);
+  margin: 20px;
+  padding: 48px 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.upload-dropzone:hover {
+  border-color: #0f62fe;
+  background: rgba(15, 98, 254, 0.05);
+  transform: scale(1.02);
+  box-shadow: 0 0 40px rgba(15, 98, 254, 0.15);
+}
+
+@keyframes slowPulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.1); color: #0f62fe; text-shadow: 0 0 15px rgba(15,98,254,0.5); }
+}
+
+.dropzone-icon {
+  font-size: 2.5rem;
+  color: #393939;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.upload-dropzone:hover .dropzone-icon {
+  animation: slowPulse 2s ease-in-out infinite;
+}
+
+.dropzone-text {
+  font-family: 'Inter', 'Roboto', sans-serif;
+  font-size: 1.2rem;
+  color: var(--text-primary, #f3f4f6);
+  margin: 0;
+}
+
+.dropzone-text strong {
+  color: var(--text-accent, #60a5fa);
+  letter-spacing: 1px;
+}
+
+.dropzone-loading {
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 1rem;
+  color: var(--text-accent, #60a5fa);
+  margin: 0;
+}
+
+.dropzone-replace {
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 1rem;
+  color: var(--text-secondary, #9ca3af);
+  margin: 0;
+}
+
+/* ── Chunk Telemetry ─────────────────────────────────────────────────────── */
+.telemetry-block {
+  background: #0a0a0a;
+  border: 1px solid var(--border-light, #374151);
+  border-left: 3px solid #24a148;
+  margin-top: 20px;
+  padding: 16px 20px;
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.9rem;
+}
+
+.telemetry-header {
+  color: #24a148;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.telemetry-line {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  color: #6f6f6f;
+}
+
+.tl-label {
+  color: #525252;
+}
+
+.tl-value {
+  color: var(--text-primary, #f3f4f6);
+}
+
+.tl-green { color: #24a148; }
+.tl-blue  { color: #0f62fe; }
+
+/* ── Pipeline Visualization ──────────────────────────────────────────────── */
+.pipeline-block {
+  background: rgba(10, 10, 10, 0.6);
+  border: 1px solid var(--border-light, #374151);
+  padding: 24px;
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.9rem;
+}
+
+.pipeline-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  color: #a8a8a8;
+}
+
+.step-icon {
+  color: #0f62fe;
+  font-weight: 700;
+}
+
+.pipeline-arrow {
+  margin-left: 12px;
+  color: #393939;
+  font-size: 1.2rem;
+}
+
+.pipeline-status {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px dashed #374151;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pipeline-status.idle {
+  color: #6f6f6f;
+}
+
+.pipeline-status.active {
+  color: #0f62fe;
+  animation: subtlePulse 2s infinite;
+}
+
+.status-pulse {
+  width: 6px;
+  height: 6px;
+  background: #0f62fe;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #0f62fe;
+}
+
+/* ── Error Block ─────────────────────────────────────────────────────────── */
+.error-block {
+  background: #1a0a0a;
+  border: 1px solid rgba(218, 30, 40, 0.3);
+  border-left: 3px solid #da1e28;
+  margin-top: 20px;
+  padding: 12px 20px;
+  font-family: 'Fira Code', 'Courier New', 'Consolas', monospace;
+  font-size: 0.75rem;
+  color: #ff6b6b;
+}
+
+.error-prefix {
+  color: #da1e28;
+  font-weight: 700;
+}

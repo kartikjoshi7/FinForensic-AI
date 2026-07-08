@@ -1,0 +1,110 @@
+<div class="kb-page">
+  <div class="kb-ambient"></div>
+
+  <section class="kb-container">
+    <div class="kb-header anim-fade-in" style="animation-delay: 0.1s;">
+      <h2 class="glow-title">KNOWLEDGE BASE</h2>
+      <p class="kb-sub">> Secure Document Vectorization Terminal</p>
+    </div>
+
+    <div class="kb-grid">
+      <!-- ── Left Pane: Upload Terminal ─────────────────────────────────── -->
+      <div class="kb-left">
+        <div class="upload-terminal anim-fade-in" style="animation-delay: 0.3s;">
+      <div class="terminal-header">
+        <span class="terminal-dot red"></span>
+        <span class="terminal-dot yellow"></span>
+        <span class="terminal-dot green"></span>
+        <span class="terminal-title">RAG_INGESTION_v2.0</span>
+      </div>
+
+      <input type="file" accept="application/pdf"
+        style="display: none;"
+        #fileInput
+        (change)="onFileSelected($event)">
+
+      <div class="upload-dropzone" (click)="fileInput.click()">
+        <div class="dropzone-icon">⬡</div>
+        <p *ngIf="!isUploading && !stateService.uploadedFileName" class="dropzone-text">
+          <strong>UPLOAD</strong> corporate PDF for semantic chunking
+        </p>
+        <p *ngIf="isUploading" class="dropzone-loading">
+          > Vectorizing document chunks&hellip;
+        </p>
+        <p *ngIf="!isUploading && stateService.uploadedFileName" class="dropzone-replace">
+          > Click to replace active document
+        </p>
+      </div>
+      </div>
+      </div>
+      <!-- ── End Left Pane ── -->
+      <!-- ── Right Pane: Telemetry & Pipeline ───────────────────────────── -->
+      <div class="kb-right">
+        <!-- ── Chunk Telemetry ── -->
+    <div class="telemetry-block anim-fade-in" style="animation-delay: 0.5s;"
+      *ngIf="stateService.uploadedFileName && !isUploading">
+      <div class="telemetry-header">VECTOR_DB_SYNC</div>
+      <div class="telemetry-line">
+        <span class="tl-label">STATUS</span>
+        <span class="tl-value tl-green">COMPLETE</span>
+      </div>
+      <div class="telemetry-line">
+        <span class="tl-label">DOCUMENT</span>
+        <span class="tl-value">{{ stateService.uploadedFileName }}</span>
+      </div>
+      <div class="telemetry-line">
+        <span class="tl-label">CHUNKS</span>
+        <span class="tl-value tl-blue">{{ totalChunks }}</span>
+      </div>
+      <div class="telemetry-line">
+        <span class="tl-label">COLLECTION</span>
+        <span class="tl-value">financial_reports</span>
+      </div>
+      <div class="telemetry-line">
+        <span class="tl-label">ENGINE</span>
+        <span class="tl-value">ChromaDB + LangChain</span>
+      </div>
+        </div>
+
+        <!-- ── Pipeline Visualization (Default) ── -->
+        <div class="pipeline-block anim-fade-in" style="animation-delay: 0.5s;"
+          *ngIf="!stateService.uploadedFileName || isUploading">
+          <div class="telemetry-header">RAG_PIPELINE_ARCHITECTURE</div>
+          
+          <div class="pipeline-step">
+            <span class="step-icon">[1]</span>
+            <span class="step-desc">Document Ingestion & Parsing</span>
+          </div>
+          <div class="pipeline-arrow">&darr;</div>
+          <div class="pipeline-step">
+            <span class="step-icon">[2]</span>
+            <span class="step-desc">RecursiveCharacterTextSplitter</span>
+          </div>
+          <div class="pipeline-arrow">&darr;</div>
+          <div class="pipeline-step">
+            <span class="step-icon">[3]</span>
+            <span class="step-desc">Semantic Vector Embedding</span>
+          </div>
+          <div class="pipeline-arrow">&darr;</div>
+          <div class="pipeline-step">
+            <span class="step-icon">[4]</span>
+            <span class="step-desc">ChromaDB Collection Sync</span>
+          </div>
+          
+          <div class="pipeline-status active" *ngIf="isUploading">
+            <span class="status-pulse"></span> PROCESSING VECTORIZATION...
+          </div>
+          <div class="pipeline-status idle" *ngIf="!stateService.uploadedFileName && !isUploading">
+            SYSTEM IDLE. AWAITING PAYLOAD.
+          </div>
+        </div>
+      </div>
+      <!-- ── End Right Pane ── -->
+    </div>
+
+    <!-- ── Error State ─────────────────────────────────────────────────── -->
+    <div class="error-block anim-fade-in" *ngIf="uploadError">
+      <span class="error-prefix">[ERROR]</span> {{ uploadError }}
+    </div>
+  </section>
+</div>
