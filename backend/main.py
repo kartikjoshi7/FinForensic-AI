@@ -218,7 +218,13 @@ async def analyze_with_watsonx(request: ChatRequest):
         try:
             # 1. Summarization Agent (Token Optimization)
             yield f"data: {json.dumps({'agent': 'system', 'status': 'Ingesting and summarizing context...'})}\n\n"
-            summary, sum_tokens = await summarize_document(request.company_context)
+            
+            # Query ChromaDB for a broad document overview to feed the summarizer
+            overview_query = collection.query(query_texts=["Company overview, financial summary, key highlights, revenue, profit"], n_results=10)
+            overview_context = "\n".join(overview_query['documents'][0]) if overview_query['documents'] else ""
+            
+            summary_input = f"{request.company_context}\n\nDocument Excerpts:\n{overview_context}"
+            summary, sum_tokens = await summarize_document(summary_input)
             yield f"data: {json.dumps({'agent': 'summarization', 'content': summary, 'tokens': sum_tokens})}\n\n"
 
             # 2. Map Phase (Parallel Agents)
@@ -226,13 +232,13 @@ async def analyze_with_watsonx(request: ChatRequest):
             
             # Using asyncio to run them concurrently
             # Querying ChromaDB for Context
-            quant_query = collection.query(query_texts=["Financial performance, revenue, EBITDA, growth, margins"], n_results=3)
+            quant_query = collection.query(query_texts=["Financial performance, revenue, EBITDA, growth, margins"], n_results=10)
             quant_context = "\n".join(quant_query['documents'][0]) if quant_query['documents'] else ""
             
-            comp_query = collection.query(query_texts=["Regulatory risks, SEC, litigation, debt, compliance penalties"], n_results=3)
+            comp_query = collection.query(query_texts=["Regulatory risks, SEC, litigation, debt, compliance penalties"], n_results=10)
             comp_context = "\n".join(comp_query['documents'][0]) if comp_query['documents'] else ""
             
-            macro_query = collection.query(query_texts=["Market conditions, competitors, geopolitical impact, supply chain, macroeconomic shock"], n_results=3)
+            macro_query = collection.query(query_texts=["Market conditions, competitors, geopolitical impact, supply chain, macroeconomic shock"], n_results=10)
             macro_context = "\n".join(macro_query['documents'][0]) if macro_query['documents'] else ""
             
             task_quant = asyncio.create_task(run_quant_analysis(summary, f"{request.company_context}\n\nDocument Context:\n{quant_context}"))
