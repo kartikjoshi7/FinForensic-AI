@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
@@ -9,6 +9,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the backend contents into the container root
 COPY backend/ .
+
+# Pre-download ChromaDB models to avoid Cloud Run startup timeouts
+RUN python -c "import chromadb; chromadb.Client().get_or_create_collection('warmup')"
 
 EXPOSE 8000
 
