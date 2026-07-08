@@ -29,8 +29,12 @@
     <img src="https://img.shields.io/badge/Angular-18-DD0031.svg?style=for-the-badge&logo=angular&logoColor=white" alt="Angular 18" />
     <img src="https://img.shields.io/badge/FastAPI-009688.svg?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" />
     <img src="https://img.shields.io/badge/IBM_Watsonx-052FAD.svg?style=for-the-badge&logo=ibm&logoColor=white" alt="IBM Watsonx" />
-    <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="License MIT" />
     <img src="https://img.shields.io/badge/Build-Passing-brightgreen.svg?style=for-the-badge" alt="Build Passing" />
+  </p>
+
+  <p align="center">
+    <strong>Live Deployment:</strong> <br>
+    <a href="https://finforensic-terminal.vercel.app">https://finforensic-terminal.vercel.app</a>
   </p>
 </div>
 
@@ -38,40 +42,53 @@
 
 ## Executive Summary
 
-The global financial system requires absolute precision, yet legacy auditing processes are plagued by human latency, siloed risk modeling, and manual compliance checks. FinForensic AI bridges this critical gap through **deterministic AI orchestration**, transforming static financial reports into dynamic, risk-adjusted intelligence in real time. 
+The global financial system requires absolute precision, yet legacy auditing processes are plagued by human latency, siloed risk modeling, and manual compliance checks. **FinForensic AI** bridges this critical gap through **deterministic AI orchestration**, transforming static financial reports into dynamic, risk-adjusted intelligence in real-time. 
 
-Designed specifically for institutional environments, the platform relies on an **asynchronous multi-agent debate** architecture. By forcing specialized AI agents (Quantitative, Compliance, and Macro) to independently analyze data and cross-validate findings under the supervision of a Chairman Orchestrator, FinForensic AI is **designed to eliminate LLM hallucinations in high-stakes financial auditing**, delivering surgical, uncompromised boardroom verdicts.
+Designed specifically for institutional environments, the platform relies on an **asynchronous multi-agent debate** architecture powered by a massive 70-Billion parameter foundation model (`meta-llama/llama-3-3-70b-instruct`). By forcing specialized AI agents (Quantitative, Compliance, and Macro) to independently analyze data and cross-validate findings under the supervision of a Chairman Orchestrator, FinForensic AI fundamentally eliminates LLM hallucinations in high-stakes financial auditing, delivering surgical, uncompromised boardroom verdicts.
 
 ---
 
-## Core System Architecture
+## The Neural Swarm Architecture
 
-FinForensic AI is not a simple wrapper; it is a highly concurrent orchestration engine where every component serves a distinct purpose in the cognitive pipeline.
+FinForensic AI is not a simple wrapper; it is a highly concurrent orchestration engine where every component serves a distinct purpose in the cognitive pipeline. The core backend processes execute via a robust Map-Reduce pattern:
 
-- **Frontend (The Terminal):** Built with **Angular**, the UI leverages **RxJS** and **Server-Sent Events (SSE)** for real-time stream consumption. Custom CSS Grid layouts and micro-animations deliver a terminal-grade progressive disclosure experience without blocking the main thread.
-- **Backend (The Orchestrator):** Engineered in **FastAPI**, it utilizes pure **asyncio** for concurrent, non-blocking agent execution. **Pydantic** enforces strict data validation schemas to guarantee pipeline integrity.
-- **Cognitive Engine:** Powered by **IBM Watsonx (Granite Instruct models)**, the intelligence layer leverages highly tuned system instructions and dynamic prompt injection to synthesize vast amounts of financial context.
-- **Vector Memory:** Implements a Semantic RAG pipeline using **ChromaDB** and **LangChain**. Corporate PDFs are ingested, chunked, and vectorized, allowing the AI swarm to dynamically query the most relevant financial and regulatory contexts.
+### 1. The Map Phase (Concurrent Agent Execution)
+Three specialized sub-agents are executed completely asynchronously to analyze corporate financial data from unique perspectives. They are fed specific, vectorized chunks of the ingested financial documents via ChromaDB to ensure grounded analysis:
+- **Aggressive Quant:** Models worst-case versus expected-case scenarios, mathematically assessing downside risk, investment horizons, and ROI elasticity.
+- **Compliance Officer:** A zero-tolerance regulatory watchdog that strictly cross-references corporate actions against non-negotiable institutional mandates (e.g., GDPR, ESG standards, Debt-to-Equity ratios).
+- **Macro-Economist:** Synthesizes the broader market context, competitor landscapes, and historical shock impacts to assess long-term strategy viability.
+
+### 2. The Reduce Phase (Chairman Orchestrator Synthesis)
+Once all three sub-agents independently report their findings, the **Chairman Orchestrator** synthesizes the multi-dimensional analysis into a definitive, actionable **Boardroom Verdict** (Approved, Denied, or Conditional). 
+
+---
+
+## Core System Technologies
+
+- **Frontend (The Terminal):** Built with **Angular 18**, leveraging **RxJS** and **Server-Sent Events (SSE)** for real-time neural stream consumption. Custom CSS Grid layouts and micro-animations deliver a premium, terminal-grade progressive disclosure experience.
+- **Backend (The Orchestrator):** Engineered in **FastAPI**, it utilizes pure **asyncio** for concurrent, non-blocking agent execution. **Pydantic** enforces strict data validation schemas to guarantee pipeline integrity. Deployed continuously on **Google Cloud Run** via a customized CI/CD pipeline using **Cloud Build**.
+- **Cognitive Engine:** Powered by **IBM Watsonx**, running state-of-the-art LLMs (70-Billion parameters) with highly tuned system instructions, dynamic prompt injection, and robust token telemetry.
+- **Vector Memory (RAG Pipeline):** Implements a Semantic RAG architecture using **ChromaDB** and **LangChain**. Corporate PDFs are ingested, chunked, and vectorized locally, allowing the AI swarm to dynamically query the 10 most relevant financial paragraphs per agent.
 
 ---
 
 ## Key Platform Features
 
-- **Asynchronous Neural Swarm:** Quant, Compliance, and Macro agents execute simultaneously in isolated context windows. This parallel processing massively reduces latency while preventing agents from anchoring to each other's biases.
-- **Live Token Telemetry:** Real-time observability of Watsonx inference costs. The UI renders dynamic visual feedback, showing exact input/output token expenditure per agent, crucial for enterprise scale.
-- **Mandate Override Protocol:** Institutional risk rules that act as hard "vetoes" on AI decisions. If a user injects a mandate (e.g., "Must be GDPR compliant") and the Compliance Agent detects a violation, the Chairman Orchestrator is programmatically forced to halt approval.
-- **Cognitive Audit Trail:** Transparent lineage mapping for all AI-generated financial insights. Every decision can be traced back to the specific agent, the exact prompt, and the precise document chunk that influenced the outcome.
+- **Asynchronous Neural Swarm:** Agents execute simultaneously in isolated context windows. This parallel processing massively reduces latency while preventing agents from anchoring to each other's biases.
+- **Live Token Telemetry:** Real-time observability of Watsonx inference costs. The UI renders dynamic visual feedback, showing exact input/output token expenditure per agent, crucial for tracking enterprise operational expenditure.
+- **Mandate Override Protocol:** Institutional risk rules that act as hard "vetoes" on AI decisions. If a user injects a mandate (e.g., "Debt-to-equity ratio must not exceed 2.0x") and the Compliance Agent detects a violation or insufficient data, the Chairman Orchestrator is programmatically forced to halt approval.
+- **Cognitive Audit Trail:** Transparent lineage mapping for all AI-generated financial insights. Every decision can be traced back to the specific agent, the exact prompt context, and the precise document chunk that influenced the outcome.
 
 ---
 
 ## Security & Compliance Posture
 
-Engineered for the enterprise, FinForensic AI has undergone a rigorous, multi-pass deep forensic security audit to achieve a hardened production posture:
+Engineered for the enterprise, FinForensic AI has undergone rigorous forensic security hardening:
 
-- **Rate Limiting:** In-memory throttling via middleware protects Watsonx API quotas from DDoS or abuse (10 req/min for AI endpoints).
-- **Strict Validation:** Pydantic validators cap input lengths (e.g., 50,000 chars for context) while backend handlers strictly enforce MIME-types (PDF-only) and 10MB upload limits.
-- **Prompt Sanitization:** A 14-pattern regex firewall actively strips known prompt injection attacks (e.g., "ignore all previous instructions") before they reach the LLM interpolation layer.
-- **Network & Data Hardening:** Features locked-down CORS policies (explicit methods/headers), generic error sanitization to prevent stack trace leaks, Base64-obfuscated localStorage, and comprehensive HTTP security headers (CSP, X-Frame-Options).
+- **Rate Limiting:** In-memory throttling via middleware protects Watsonx API quotas from DDoS or abuse.
+- **Strict Validation:** Pydantic validators cap input lengths while backend handlers strictly enforce MIME-types (PDF-only) and 10MB upload limits.
+- **Prompt Sanitization:** A multi-pattern regex firewall actively strips known prompt injection attacks (e.g., "ignore all previous instructions") before they reach the LLM interpolation layer.
+- **Network & Data Hardening:** Features locked-down CORS policies, generic error sanitization to prevent stack trace leaks, Base64-obfuscated localStorage, and comprehensive HTTP security headers.
 - **Secure Environment Management:** Complete `.gitignore` isolation ensures `WATSONX_API_KEY` and other secrets are never leaked to version control.
 
 ---
