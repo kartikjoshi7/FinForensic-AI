@@ -42,8 +42,11 @@
 
 ## Platform Interface
 
-![FinForensic AI Terminal](docs/assets/boardroom-execution.gif)
-<p align="center"><em>Live Boardroom interface rendering Monte Carlo trajectories and Watsonx neural consensus.</em></p>
+<p align="center">
+  <img src="frontend/public/boardroom-execution.gif" alt="FinForensic AI Terminal" />
+  <br>
+  <em>Live Boardroom interface rendering Monte Carlo trajectories and Watsonx neural consensus.</em>
+</p>
 
 ---
 
@@ -145,8 +148,27 @@ Engineered for the enterprise, FinForensic AI has undergone rigorous forensic se
 ## Repository Structure
 
 ```text
-frontend/ (Angular Workspace containing components, services, styles)
-backend/ (FastAPI containing main.py, agents/, memory/, and Dockerfile)
+FinForensic-AI/
+├── backend/                           # FastAPI Orchestrator & Python Environment
+│   ├── agents.py                      # IBM Watsonx multi-agent Map-Reduce logic
+│   ├── main.py                        # REST/SSE streaming endpoints & RAG ingestion
+│   ├── prompts.json                   # Cognitive instructions & mandate definitions
+│   ├── Dockerfile                     # Cloud Run containerization specifications
+│   ├── requirements.txt               # Python package dependencies
+│   └── tests/                         # Pytest integration and cognitive fixtures
+│
+└── frontend/                          # Angular 18 Client Application
+    ├── nginx.conf                     # Edge proxy routing configuration
+    ├── package.json                   # Node dependencies
+    └── src/
+        └── app/
+            ├── components/
+            │   ├── boardroom/         # Monte Carlo HUD & Swarm Execution UI
+            │   ├── home/              # Platform overview dashboard
+            │   ├── knowledge-base/    # Semantic Vector mapping UI
+            │   └── mandates/          # Compliance rule configuration UI
+            └── services/
+                └── state.service.ts   # RxJS application state management
 ```
 
 ---
@@ -213,4 +235,3 @@ This project is distributed under the MIT License. This means the software is pr
 If you are interested in exploring this architecture further, collaborating on future institutional AI implementations, or connecting regarding Developer Advocacy and Technical Writing roles, feel free to reach out.
 
 - **GitHub:** [@kartikjoshi7](https://github.com/kartikjoshi7)
-- **Email:** jkartik0805@gmail.com
