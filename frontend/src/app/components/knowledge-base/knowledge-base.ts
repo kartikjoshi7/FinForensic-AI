@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { Component, ChangeDetectorRef, ElementRef, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { StateService } from '../../services/state.service';
@@ -15,6 +15,7 @@ export class KnowledgeBaseComponent {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   private readonly http = inject(HttpClient);
   public stateService = inject(StateService);
+  private cdr = inject(ChangeDetectorRef);
 
   isUploading = false;
   uploadError = '';
@@ -46,6 +47,7 @@ export class KnowledgeBaseComponent {
       this.stateService.extractedContext = '';
     } finally {
       this.isUploading = false;
+      this.cdr.detectChanges();
     }
   }
 }
