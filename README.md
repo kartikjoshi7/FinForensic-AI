@@ -44,7 +44,7 @@
 
 The global financial system requires absolute precision, yet legacy auditing processes are plagued by human latency, siloed risk modeling, and manual compliance checks. **FinForensic AI** bridges this critical gap through **deterministic AI orchestration**, transforming static financial reports into dynamic, risk-adjusted intelligence in real-time. 
 
-Designed specifically for institutional environments, the platform relies on an **asynchronous multi-agent debate** architecture powered by a massive 70-Billion parameter foundation model (`meta-llama/llama-3-3-70b-instruct`). By forcing specialized AI agents (Quantitative, Compliance, and Macro) to independently analyze data and cross-validate findings under the supervision of a Chairman Orchestrator, FinForensic AI fundamentally eliminates LLM hallucinations in high-stakes financial auditing, delivering surgical, uncompromised boardroom verdicts.
+Designed specifically for institutional environments, the platform relies on an **asynchronous multi-agent debate** architecture powered by IBM's latest **Granite 4** foundation model (`ibm/granite-4-h-small`). By forcing specialized AI agents (Quantitative, Compliance, and Macro) to independently analyze data and cross-validate findings under the supervision of a Chairman Orchestrator, FinForensic AI fundamentally eliminates LLM hallucinations in high-stakes financial auditing, delivering surgical, uncompromised boardroom verdicts.
 
 ---
 
@@ -67,7 +67,7 @@ Once all three sub-agents independently report their findings, the **Chairman Or
 
 - **Frontend (The Terminal):** Built with **Angular 18**, leveraging **RxJS** and **Server-Sent Events (SSE)** for real-time neural stream consumption. Custom CSS Grid layouts and micro-animations deliver a premium, terminal-grade progressive disclosure experience.
 - **Backend (The Orchestrator):** Engineered in **FastAPI**, it utilizes pure **asyncio** for concurrent, non-blocking agent execution. **Pydantic** enforces strict data validation schemas to guarantee pipeline integrity. Deployed continuously on **Google Cloud Run** via a customized CI/CD pipeline using **Cloud Build**.
-- **Cognitive Engine:** Powered by **IBM Watsonx**, running state-of-the-art LLMs (70-Billion parameters) with highly tuned system instructions, dynamic prompt injection, and robust token telemetry.
+- **Cognitive Engine:** Powered by **IBM Watsonx**, running state-of-the-art Granite Foundation Models with highly tuned system instructions, dynamic prompt injection, and robust token telemetry.
 - **Vector Memory (RAG Pipeline):** Implements a Semantic RAG architecture using **ChromaDB** and **LangChain**. Corporate PDFs are ingested, chunked, and vectorized locally, allowing the AI swarm to dynamically query the 10 most relevant financial paragraphs per agent.
 
 ---
