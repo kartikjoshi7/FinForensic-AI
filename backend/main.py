@@ -109,8 +109,8 @@ app.add_middleware(
 # [H3] Pydantic models with input length validation
 # ---------------------------------------------------------------------------
 
-# Maximum upload file size: 10 MB
-MAX_UPLOAD_SIZE_BYTES = 10 * 1024 * 1024
+# Maximum upload file size: 30 MB
+MAX_UPLOAD_SIZE_BYTES = 30 * 1024 * 1024
 
 class FinancialData(BaseModel):
     working_capital: float
