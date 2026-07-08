@@ -40,6 +40,13 @@
 
 ---
 
+## Platform Interface
+
+![FinForensic AI Terminal](docs/assets/boardroom-execution.gif)
+<p align="center"><em>Live Boardroom interface rendering Monte Carlo trajectories and Watsonx neural consensus.</em></p>
+
+---
+
 ## Executive Summary
 
 The global financial system requires absolute precision, yet legacy auditing processes are plagued by human latency, siloed risk modeling, and manual compliance checks. **FinForensic AI** bridges this critical gap through **deterministic AI orchestration**, transforming static financial reports into dynamic, risk-adjusted intelligence in real-time. 
@@ -71,6 +78,22 @@ If an institution injects a strict mandate (e.g., *"Must be fully compliant with
 
 FinForensic AI is not a simple wrapper; it is a highly concurrent orchestration engine where every component serves a distinct purpose in the cognitive pipeline:
 
+```mermaid
+graph TD
+  Client[Angular 18 Client] --> FastAPI[FastAPI Orchestrator]
+  FastAPI --> Chairman[Chairman Orchestrator]
+  Chairman --> Quant[Quant Agent]
+  Chairman --> Compliance[Compliance Agent]
+  Chairman --> Macro[Macro Agent]
+  Quant <--> VectorStore[(ChromaDB Vector Store)]
+  Compliance <--> VectorStore
+  Macro <--> VectorStore
+  Quant <--> Watsonx[IBM Watsonx Granite]
+  Compliance <--> Watsonx
+  Macro <--> Watsonx
+  Chairman --> |Synthesized Verdict| Client
+```
+
 ### 1. Semantic RAG (Document Ingestion)
 Corporate PDFs are uploaded into the secure terminal, chunked via LangChain's `RecursiveCharacterTextSplitter`, and embedded into a localized **ChromaDB** vector memory store.
 
@@ -88,9 +111,14 @@ Once all three sub-agents independently report their findings, the **Chairman Or
 ## Core System Technologies
 
 - **Frontend (The Terminal):** Built with **Angular 18**, leveraging **RxJS** and **Server-Sent Events (SSE)** for real-time neural stream consumption. Custom CSS Grid layouts and micro-animations deliver a premium, terminal-grade progressive disclosure experience.
-- **Backend (The Orchestrator):** Engineered in **FastAPI**, it utilizes pure **asyncio** for concurrent, non-blocking agent execution. **Pydantic** enforces strict data validation schemas to guarantee pipeline integrity. Deployed continuously on **Google Cloud Run** via a customized CI/CD pipeline.
+- **Backend (The Orchestrator):** Engineered in **FastAPI**, it utilizes pure **asyncio** for concurrent, non-blocking agent execution. **Pydantic** enforces strict data validation schemas to guarantee pipeline integrity.
 - **Cognitive Engine:** Powered by **IBM Watsonx**, running state-of-the-art Granite Foundation Models with highly tuned system instructions, dynamic prompt injection, and robust token telemetry.
 - **Vector Memory:** Implements a Semantic RAG architecture using **ChromaDB** and **LangChain**.
+
+### Infrastructure & Deployment
+- **Edge Delivery:** Frontend deployed via Vercel for global CDN caching.
+- **Serverless Backend:** FastAPI containerized via Docker and deployed on Google Cloud Run for scale-to-zero efficiency.
+- **CI/CD Pipeline:** Automated GitHub Actions trigger image builds in Google Artifact Registry upon merging to the main branch.
 
 ---
 
@@ -111,6 +139,15 @@ Engineered for the enterprise, FinForensic AI has undergone rigorous forensic se
 - **Prompt Sanitization:** A multi-pattern regex firewall actively strips known prompt injection attacks (e.g., "ignore all previous instructions") before they reach the LLM interpolation layer.
 - **Network & Data Hardening:** Features locked-down CORS policies, generic error sanitization to prevent stack trace leaks, Base64-obfuscated localStorage, and comprehensive HTTP security headers.
 - **Secure Environment Management:** Complete `.gitignore` isolation ensures `WATSONX_API_KEY` and other secrets are never leaked to version control.
+
+---
+
+## Repository Structure
+
+```text
+frontend/ (Angular Workspace containing components, services, styles)
+backend/ (FastAPI containing main.py, agents/, memory/, and Dockerfile)
+```
 
 ---
 
@@ -164,3 +201,16 @@ The terminal will be accessible at `http://localhost:4200`.
 ## Acknowledgments
 
 This platform was engineered as part of the **Edunet/IBM Summer Internship program**, leveraging the power, scale, and enterprise readiness of the **IBM Cloud ecosystem** and **Watsonx Foundation Models**.
+
+---
+
+## License
+
+This project is distributed under the MIT License. This means the software is provided "as-is", without warranty of any kind, and you are free to use, modify, and distribute it.
+
+## Connect
+
+If you are interested in exploring this architecture further, collaborating on future institutional AI implementations, or connecting regarding Developer Advocacy and Technical Writing roles, feel free to reach out.
+
+- **GitHub:** [@kartikjoshi7](https://github.com/kartikjoshi7)
+- **Email:** jkartik0805@gmail.com
