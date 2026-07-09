@@ -1,0 +1,15 @@
+{
+  "name": "FinForensic AI",
+  "description": "Institutional Risk & Compliance Terminal built with IBM Watsonx, FastAPI, and Angular.",
+  "repository": "https://github.com/kartikjoshi7/FinForensic-AI",
+  "keywords": [
+    "ai",
+    "risk",
+    "compliance",
+    "ibm-watsonx",
+    "fastapi",
+    "angular",
+    "edunet",
+    "ibm-skillsbuild"
+  ]
+}
