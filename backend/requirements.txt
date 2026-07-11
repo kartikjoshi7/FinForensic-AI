@@ -5,7 +5,7 @@ ibm-watsonx-ai
 chromadb
 langchain-text-splitters
 langchain-community
-sentence-transformers
+onnxruntime
 PyMuPDF
 pydantic
 python-multipart

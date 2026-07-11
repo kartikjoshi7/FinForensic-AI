@@ -20,7 +20,6 @@ from ibm_watsonx_ai.metanames import GenTextParamsMetaNames as GenParams
 
 import chromadb
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.embeddings import SentenceTransformerEmbeddings
 
 chroma_client = chromadb.Client()
 collection = chroma_client.get_or_create_collection(name="financial_reports")
