@@ -101,7 +101,7 @@ app.add_middleware(
     allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type", "Authorization"],
+    allow_headers=["*"],
 )
 
 # ---------------------------------------------------------------------------
@@ -333,7 +333,13 @@ async def upload_report(file: UploadFile = File(...)):
             filename_safe = file.filename or "unknown"
             file_hash = hashlib.sha256(filename_safe.encode()).hexdigest()[:12]
             ids = [f"{file_hash}_chunk_{i}" for i in range(len(chunks))]
-            collection.upsert(documents=chunks, ids=ids)
+            
+            # Batch upserts to prevent Out-Of-Memory (OOM) kills on Render's 512MB free tier
+            batch_size = 5
+            for i in range(0, len(chunks), batch_size):
+                batch_chunks = chunks[i:i + batch_size]
+                batch_ids = ids[i:i + batch_size]
+                collection.upsert(documents=batch_chunks, ids=batch_ids)
 
         return {"filename": file.filename, "status": "Vectorized", "total_chunks": len(chunks)}
 
