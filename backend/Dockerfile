@@ -10,8 +10,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the backend contents into the container root
 COPY backend/ .
 
-# Pre-download ChromaDB models to avoid Cloud Run startup timeouts
-RUN python -c "import chromadb; chromadb.Client().get_or_create_collection('warmup')"
+# Pre-download ChromaDB ONNX models to avoid massive latency on first upload
+RUN python -c "from chromadb.utils import embedding_functions; ef = embedding_functions.DefaultEmbeddingFunction(); ef(['warmup'])"
 
 EXPOSE 8000
 
