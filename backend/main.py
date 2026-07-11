@@ -175,7 +175,9 @@ def _z_score_risk_status(z: float) -> str:
 # ---------------------------------------------------------------------------
 
 @app.get("/")
+@app.head("/")
 @app.get("/api/health")
+@app.head("/api/health")
 def health_check():
     """Verify backend connectivity and system health."""
     return {"status": "ok", "message": "FinForensic AI backend is online."}
