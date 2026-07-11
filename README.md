@@ -120,8 +120,8 @@ Once all three sub-agents independently report their findings, the **Chairman Or
 
 ### Infrastructure & Deployment
 - **Edge Delivery:** Frontend deployed via Vercel for global CDN caching.
-- **Serverless Backend:** FastAPI containerized via Docker and deployed on Google Cloud Run for scale-to-zero efficiency.
-- **CI/CD Pipeline:** Automated GitHub Actions trigger image builds in Google Artifact Registry upon merging to the main branch.
+- **Serverless Backend:** FastAPI containerized via Docker and deployed as a Web Service on **Render**, kept highly available and warm via UptimeRobot telemetry.
+- **CI/CD Pipeline:** Native GitHub integration triggers zero-downtime automatic builds and deployments on Vercel and Render upon merging to the `main` branch.
 
 ---
 
