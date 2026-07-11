@@ -174,6 +174,13 @@ def _z_score_risk_status(z: float) -> str:
 # Endpoints
 # ---------------------------------------------------------------------------
 
+@app.get("/")
+@app.get("/api/health")
+def health_check():
+    """Verify backend connectivity and system health."""
+    return {"status": "ok", "message": "FinForensic AI backend is online."}
+
+
 @app.post("/api/audit/z-score")
 def calculate_z_score(data: FinancialData):
     """
