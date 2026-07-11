@@ -325,7 +325,7 @@ async def upload_report(file: UploadFile = File(...)):
 
         doc.close()
 
-        splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+        splitter = RecursiveCharacterTextSplitter(chunk_size=4000, chunk_overlap=500)
         chunks = splitter.split_text(raw_text)
 
         if chunks:
